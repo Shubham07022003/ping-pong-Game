@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if(ballX> table.offsetWidth - ball.offsetWidth || ballX <= 0) dx*=-1; //if ball hits the right or left wall, reverse the direction of ball in x direction
         if(ballY> table.offsetHeight - ball.offsetHeight || ballY <= 0) dy*=-1; //if ball hits the bottom or top wall, reverse the direction of ball in y direction
 
-    }, 1);
+    }, 4);
 
     let paddleY = 0;
     let dPy =10; //distance factor in y direction
@@ -42,5 +42,18 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("down", paddleY);
         }
         paddle.style.top= `${paddleY}px`;
+    });
+    document.addEventListener('mousemove', (event) => {
+        if(event.clientX > table.offsetLeft + (table.offsetWidth /2 )) return; //if mouse is outside the table, return
+        let mouseDistanceFromTop = event.clientY; //distance of the mouse from the top of the screen
+        let distanceOfTableFromTop = table.offsetTop ; //distance of the table from the top of the screen
+        let mousePointControl = mouseDistanceFromTop -distanceOfTableFromTop - paddle.offsetHeight/2;
+        paddleY = mousePointControl;
+        if(paddleY < 0 || paddleY > table.offsetHeight - paddle.offsetHeight)return;
+            paddle.style.top = `${paddleY}px`;
+            // paddleY = mousePointControl < 0 ? 0 : table.offsetHeight - paddle.offsetHeight;
+        
+   
     })
+
 })
